@@ -1,4 +1,6 @@
 <?php
+
+
 /**
  * Created by PhpStorm.
  * User: 南丞
@@ -29,17 +31,20 @@
  *
  */
 
+use pf\view\View;
+
 class ViewTest extends \PHPUnit\Framework\TestCase
 {
     public function setUp()
     {
         parent::setUp();
-        \pf\config\Config::loadFiles('test/config');
+        \pf\config\Config::loadFiles('tests/config');
     }
 
-    public function testMake()
+    public function test_make()
     {
-        \pf\view\View::make('tests/view/make.html', ['title' => '大爷的']);
+        $res = View::make('tests/view/make.html');
+        $this->assertEquals('make.html',$res);
     }
 
 }

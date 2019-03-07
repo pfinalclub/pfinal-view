@@ -33,5 +33,6 @@ return [
     'prefix' => '.php', //模板后缀
     'blade' => true,
     'cache_dir' => 'tests/storage/view/cahce',
-    'compile_dir' => 'tests/storage/view/compile'
+    'compile_dir' => 'tests/storage/view/compile',
+    'debug' => true
 ];

@@ -31,6 +31,7 @@
 
 namespace pf\view\build;
 
+use houdunwang\middleware\Middleware;
 use pf\arr\PFarr;
 use pf\config\Config;
 use pf\request\Request;
@@ -54,6 +55,10 @@ class Base
         return $this;
     }
 
+    public function fetch($file = '', $vars = [])
+    {
+        return $this->make($file, $vars)->parse();
+    }
 
     protected function setFile($file)
     {
@@ -111,6 +116,10 @@ class Base
             return $cache;
         }
         $content = $this->parse();
+        if ($open && $this->expire) {
+            $this->setCache($content);
+        }
+        return $content;
     }
 
     protected function parse()

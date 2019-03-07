@@ -52,7 +52,7 @@ trait Compile
     public function compile()
     {
         $this->setCompileFile();
-        $status = Config::get('app.debug') || !is_file($this->compileFile) || (filemtime($this->file) > filemtime($this->compileFile));
+        $status = Config::get('view.debug') || !is_file($this->compileFile) || (filemtime($this->file) > filemtime($this->compileFile));
         if ($status) {
             is_dir(dirname($this->compileFile)) or mkdir(dirname($this->compileFile), 0755, true);
             $this->content = file_get_contents($this->file);
@@ -64,10 +64,12 @@ trait Compile
 
     public function globalParse()
     {
-        $this->content = preg_replace('/(?<!@)\{!!(.*?)!!\/i', '<?php echo \1?>', $this->content);
+        $this->content = preg_replace('/(?<!@)\{!!(.*?)!!\}/i', '<?php echo \1?>', $this->content);
+        //处理{{}} 转识体
         $this->content = preg_replace('/(?<!@)\{\{(.*?)\}\}/i', '<?php echo htmlspecialchars(\1)?>', $this->content);
+        //处理@{{}}
         $this->content = preg_replace('/@(\{\{.*?\}\})/i', '\1', $this->content);
     }
 
-    
+
 }
